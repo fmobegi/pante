@@ -111,8 +111,8 @@ VSEARCH_VERSION=2.14.1
 VSEARCH_URL=https://github.com/torognes/vsearch/archive/v2.14.1.tar.gz
 VSEARCH_PREFIX_ARG=$(INSTALL_BASE)/vsearch/$(VSEARCH_VERSION)
 
-DECIPHER_VERSION=2.16.1
-DECIPHER_URL=http://www2.decipher.codes/DECIPHER_2.16.1.tar.gz
+DECIPHER_VERSION=2.18.1
+DECIPHER_URL=http://www2.decipher.codes/DECIPHER_2.18.1.tar.gz
 DECIPHER_PREFIX_ARG=$(INSTALL_BASE)/decipher/$(DECIPHER_VERSION)
 
 
