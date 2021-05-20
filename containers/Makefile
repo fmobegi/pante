@@ -56,8 +56,8 @@ RMOD_URL=http://www.repeatmasker.org/RepeatModeler/RepeatModeler-open-$(RMOD_VER
 RMOD_PREFIX_ARG=$(INSTALL_BASE)/repeatmodeller/$(RMOD_VERSION)
 
 
-HMMER3_VERSION=3.2.1
-HMMER3_URL=http://eddylab.org/software/hmmer/hmmer-3.2.1.tar.gz
+HMMER3_VERSION=3.3.2
+HMMER3_URL=http://eddylab.org/software/hmmer/hmmer-3.3.2.tar.gz
 HMMER3_PREFIX_ARG=$(INSTALL_BASE)/hmmer3/$(HMMER3_VERSION)
 
 MMSEQS_TAG=9-d36de
@@ -111,8 +111,8 @@ VSEARCH_VERSION=2.14.1
 VSEARCH_URL=https://github.com/torognes/vsearch/archive/v2.14.1.tar.gz
 VSEARCH_PREFIX_ARG=$(INSTALL_BASE)/vsearch/$(VSEARCH_VERSION)
 
-DECIPHER_VERSION=2.16.1
-DECIPHER_URL=http://www2.decipher.codes/DECIPHER_2.16.1.tar.gz
+DECIPHER_VERSION=2.18.1
+DECIPHER_URL=http://www2.decipher.codes/DECIPHER_2.18.1.tar.gz
 DECIPHER_PREFIX_ARG=$(INSTALL_BASE)/decipher/$(DECIPHER_VERSION)
 
 
