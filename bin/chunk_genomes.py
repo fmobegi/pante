@@ -46,7 +46,7 @@ def chunk_seqs(lengths, n=10, penalty=15):
     total_length = sum(l[1] for l in lengths)
     av_chunk_length = total_length / n
 
-    chunks = [[] for i in range(n)]
+    chunks = [[] for _ in range(n)]
 
     for i in range(len(lengths)):
         sid, length = lengths[i]

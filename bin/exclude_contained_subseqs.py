@@ -74,7 +74,7 @@ def main():
     itree = defaultdict(IntervalTree)
     seqs = {s.id: s for s in SeqIO.parse(args.infile, format="fasta")}
 
-    for id_ in seqs.keys():
+    for id_ in seqs:
         genome, seqid, start, end = parse_id_as_interval(id_, regex)
         interval = Interval(start, end, data=id_)
 

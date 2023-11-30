@@ -67,26 +67,14 @@ def parse_external_attrs(handle):
         if line["Name"] == ".":
             line["Name"] = None
 
-        if line["Alias"] == ".":
-            line["Alias"] = []
-        else:
-            line["Alias"] = line["Alias"].split(",")
-
-        if line["Note"] == ".":
-            line["Note"] = []
-        else:
-            line["Note"] = [line["Note"]]
-
+        line["Alias"] = [] if line["Alias"] == "." else line["Alias"].split(",")
+        line["Note"] = [] if line["Note"] == "." else [line["Note"]]
         if line["Ontology_term"] == ".":
             line["Ontology_term"] = []
         else:
             line["Ontology_term"] = line["Ontology_term"].split(",")
 
-        if line["Dbxref"] == ".":
-            line["Dbxref"] = []
-        else:
-            line["Dbxref"] = line["Dbxref"].split(",")
-
+        line["Dbxref"] = [] if line["Dbxref"] == "." else line["Dbxref"].split(",")
         ext_attrs[line["ID"]] = line
     return ext_attrs
 
@@ -139,7 +127,7 @@ def dict_to_record(row, source="gffpal", ext_attributes=None):
             note=ext_attributes[row["query"]]["Note"],
         )
 
-    record = GFFRecord(
+    return GFFRecord(
         seqid=seqid,
         source=source,
         type="nucleotide_to_protein_match",
@@ -149,7 +137,6 @@ def dict_to_record(row, source="gffpal", ext_attributes=None):
         strand=strand,
         attributes=attributes,
     )
-    return record
 
 
 def main():

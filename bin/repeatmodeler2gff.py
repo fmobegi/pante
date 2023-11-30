@@ -84,11 +84,7 @@ def parse_block(handle, source, type_):
 
         seqid, start, end, strand = id_to_loc(id_)
 
-        if len(species) == 0:
-            custom = {}
-        else:
-            custom = {"species": ":".join(species)}
-
+        custom = {} if not species else {"species": ":".join(species)}
         attributes = GFFAttributes(
             name=name,
             note=note,

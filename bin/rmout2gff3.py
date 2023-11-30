@@ -103,22 +103,17 @@ class RMOut(object):
         family = sline[9]
         kind = sline[10]
 
+        tend = int(sline[12])
         if strand == "+":
             tstart = int(sline[11]) - 1
-            tend = int(sline[12])
             tremaining = int(sline[13].strip("()"))
         else:
             tstart = int(sline[13]) - 1
-            tend = int(sline[12])
             tremaining = int(sline[11].strip("()"))
 
         index = int(sline[14])
 
-        if len(sline) > 15:
-            better_hit = sline[15] == "*"
-        else:
-            better_hit = False
-
+        better_hit = sline[15] == "*" if len(sline) > 15 else False
         return cls(
             sw,
             perc_divergence,
@@ -261,7 +256,7 @@ class RMOut(object):
         else:
             strand = Strand.parse(self.strand)
 
-        record = GFFRecord(
+        return GFFRecord(
             seqid=self.query,
             source=source,
             type=type_,
@@ -271,7 +266,6 @@ class RMOut(object):
             strand=strand,
             attributes=attributes,
         )
-        return record
 
 
 def main():

@@ -89,17 +89,17 @@ def count_frequencies(seq):
 
         last = base
 
-    out = {}
     mono_total = sum(mono.values())
-    out["at"] = (mono["A"] + mono["T"]) / mono_total
-    out["gc"] = (mono["G"] + mono["C"]) / mono_total
-
+    out = {
+        "at": (mono["A"] + mono["T"]) / mono_total,
+        "gc": (mono["G"] + mono["C"]) / mono_total,
+    }
     di_total = sum(di.values())
     for dn, count in di.items():
         if "N" in dn:
             continue
 
-        name = (dn[0] + "p" + dn[1]).lower()
+        name = f"{dn[0]}p{dn[1]}".lower()
         out[name] = count / di_total
 
     return out
@@ -111,8 +111,7 @@ def main():
     gff = GFF.parse(args.ingff)
     seqs = SeqIO.to_dict(SeqIO.parse(args.infasta, format="fasta"))
 
-    counter = 1
-    for region in gff:
+    for counter, region in enumerate(gff, start=1):
         region.type = args.type
         region.source = args.source
         region.strand = Strand.UNSTRANDED
@@ -124,8 +123,6 @@ def main():
 
         base_counts = count_frequencies(seq)
         region.attributes.custom = base_counts
-
-        counter += 1
 
         print(region, file=args.outfile)
     return
