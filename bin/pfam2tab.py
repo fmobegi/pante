@@ -21,11 +21,7 @@ def main():
 
     try:
         infile_name = sys.argv[1]
-        if infile_name == "-":
-            infile_handle = sys.stdin
-        else:
-            infile_handle = open(infile_name, "r")
-
+        infile_handle = sys.stdin if infile_name == "-" else open(infile_name, "r")
         block = {"Note": [], "Dbxref": [], "Ontology_term": []}
 
         for line in infile_handle:
@@ -64,7 +60,7 @@ def main():
             elif line.startswith("#=GF DR"):
                 acc_line = sline.split("DR", maxsplit=1)[-1].strip()
                 sacc_line = acc_line.split(";")
-                acc = sacc_line[0].strip() + ":" + sacc_line[1].strip()
+                acc = f"{sacc_line[0].strip()}:{sacc_line[1].strip()}"
 
                 if acc.startswith("SO") or acc.startswith("GO"):
                     block["Ontology_term"].append(acc)

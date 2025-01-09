@@ -71,7 +71,7 @@ def get_region_feature(i, seqid, left, right, score):
         custom={"mitefinder_score": score},
     )
 
-    record = GFFRecord(
+    return GFFRecord(
         seqid=seqid,
         source="MiteFinderII",
         type="repeat_region",
@@ -81,8 +81,6 @@ def get_region_feature(i, seqid, left, right, score):
         strand=Strand.UNKNOWN,
         attributes=attributes,
     )
-
-    return record
 
 
 def get_tir_feature(i, seqid, pos):
@@ -94,7 +92,7 @@ def get_tir_feature(i, seqid, pos):
         ontology_term=["SO:0000481", "SO:terminal_inverted_repeat"]
     )
 
-    record = GFFRecord(
+    return GFFRecord(
         seqid=seqid,
         source="MiteFinderII",
         type="terminal_inverted_repeat",
@@ -104,8 +102,6 @@ def get_tir_feature(i, seqid, pos):
         strand=Strand.UNKNOWN,
         attributes=attributes,
     )
-
-    return record
 
 
 def get_mite_feature(i, seqid, left, right):
@@ -120,7 +116,7 @@ def get_mite_feature(i, seqid, left, right):
         ontology_term=["SO:0000338", "SO:MITE"]
     )
 
-    record = GFFRecord(
+    return GFFRecord(
         seqid=seqid,
         source="MiteFinderII",
         type="MITE",
@@ -130,7 +126,6 @@ def get_mite_feature(i, seqid, left, right):
         strand=Strand.UNKNOWN,
         attributes=attributes,
     )
-    return record
 
 
 def main():
@@ -139,8 +134,7 @@ def main():
     genome = SeqIO.parse(args.genome, format="fasta")
     seqids = [s.id for s in genome]
 
-    i = 1
-    for seq in seqs:
+    for i, seq in enumerate(seqs, start=1):
         (seqid, lborder_start, lborder_end,
          rborder_start, rborder_end, score) = split_desc(seq, seqids)
 
@@ -166,7 +160,6 @@ def main():
         print(ltir, file=args.outfile)
         print(mid, file=args.outfile)
         print(rtir, file=args.outfile)
-        i += 1
     return
 
 

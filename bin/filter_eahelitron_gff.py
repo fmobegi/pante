@@ -39,7 +39,7 @@ def cli(prog, args):
 def main():
     args = cli(sys.argv[0], sys.argv[1:])
 
-    rows = list()
+    rows = []
     for line in args.infile:
         if line.startswith("#"):
             continue
@@ -72,19 +72,19 @@ def main():
 
         flank3 = [c for c in mrna.children
                   if c.attributes.id.endswith(".3")]
-        if len(flank3) == 0:
+        if not flank3:
             continue
         else:
             flank3 = flank3[0]
-        
+
         flank5 = [c for c in mrna.children
                   if c.attributes.id.endswith(".5.1")]
 
-        if len(flank5) == 0:
+        if not flank5:
             continue
         else:
             flank5 = flank5[0]
-        
+
         flank3.type = "three_prime_flanking_region"
         flank3.attributes.ontology_term = [
             "SO:0001417",

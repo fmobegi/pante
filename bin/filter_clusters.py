@@ -157,13 +157,11 @@ def get_unique_loci(intervals):
     for genome, seqid, start, end in intervals:
         grouped_intervals[(genome, seqid)].append(Interval(start, end))
 
-    unique_loci = list()
+    unique_loci = []
     for (genome, seqid), intvls in grouped_intervals.items():
         itree = IntervalTree(intvls)
         itree.merge_overlaps()
-        for intvl in itree:
-            unique_loci.append((genome, seqid, intvl.begin, intvl.end))
-
+        unique_loci.extend((genome, seqid, intvl.begin, intvl.end) for intvl in itree)
     return unique_loci
 
 
@@ -182,11 +180,7 @@ def filter_intra_counts(intra_counts, min_count=2):
 
 def find_inter_count(intra_counts):
 
-    count = 0
-    for genome, intra_count in intra_counts.items():
-        count += 1
-
-    return count
+    return sum(1 for genome, intra_count in intra_counts.items())
 
 
 def get_count_statistics(intervals, min_intra=2):
@@ -261,11 +255,7 @@ def get_id_to_centroid(table):
     out = dict()
 
     for line in table:
-        if line.centroid is None:
-            centroid = line.member
-        else:
-            centroid = line.centroid
-
+        centroid = line.member if line.centroid is None else line.centroid
         out[line.member] = centroid
     return out
 
@@ -293,11 +283,7 @@ def main():
     id_to_num = get_id_to_num(table)
     id_to_centroid = get_id_to_centroid(table)
 
-    if args.size is None:
-        size = get_size_from_table(table, regex)
-    else:
-        size = args.size
-
+    size = get_size_from_table(table, regex) if args.size is None else args.size
     write_outtab_header(args.outtab)
 
     os.mkdir(args.outsel)
@@ -361,13 +347,7 @@ def main():
         for id_, seq in seqs.items():
             tab = id_to_table_member.get(id_, None)
 
-            if tab is None:
-                strand = "+"
-            elif tab.strand == "-":
-                strand = "-"
-            else:
-                strand = "+"
-
+            strand = "+" if tab is None or tab.strand != "-" else "-"
             if strand == "-":
                 seq = seq.reverse_complement()
                 # Flip the strand.
@@ -380,11 +360,7 @@ def main():
 
             out_seqs.append(seq)
 
-        if inter_freq >= args.min_inter:
-            outdir = args.outsel
-        else:
-            outdir = args.outexcl
-
+        outdir = args.outsel if inter_freq >= args.min_inter else args.outexcl
         outpath = os.path.join(outdir, os.path.split(infile.name)[-1])
         SeqIO.write(out_seqs, outpath, format="fasta")
 

@@ -36,14 +36,12 @@ def cli(prog, args):
 
 def line_to_seq(line, regex):
     sline = regex.split(line.strip(), maxsplit=1)
-    seq = SeqRecord(
+    return SeqRecord(
         id=sline[0],
         name=sline[0],
         description=sline[0],
         seq=Seq(sline[1].replace("-", "").replace(".", "")),
     )
-
-    return seq
 
 
 def main():

@@ -79,11 +79,7 @@ def main():
 
     args = cli(sys.argv[0], sys.argv[1:])
 
-    if args.go is not None:
-        go = parse_rfam2go(args.go)
-    else:
-        go = {}
-
+    go = parse_rfam2go(args.go) if args.go is not None else {}
     for line in args.infile:
         if line.startswith("#"):
             continue
@@ -95,7 +91,7 @@ def main():
             continue
 
         name = record.type
-        dbxrefs = ["Rfam:" + attrs.custom["mdlaccn"], "Rfam:" + name]
+        dbxrefs = ["Rfam:" + attrs.custom["mdlaccn"], f"Rfam:{name}"]
         if "clan" in attrs.custom:
             dbxrefs.append("RfamClan:" + attrs.custom["clan"])
 
